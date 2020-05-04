@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Relatório Horas Extras</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+</head>
+
+<body class="container">
+    <div class="form-group">
+        <h1 class="text-center">Relatório de Hora Extra</h1>
+        <h2 class="text-center">Insira os dados para gerar os relatórios.</h2>
+    </div>
+    <hr>
+    <div class="form-group">
+        <h3>Formulário Dados:
+            <img src="./imagem/info-icon.png" alt="Não foi possível carregar a imagem!" />
+        </h3>
+    </div>
+    <hr>
+    <div class="form-group">
+        <div id="mensagemView"></div>
+        <form class="form" onsubmit="reportController.adiciona(event)">
+            <div class="form-group">
+                <label>Competência:</label>
+                <select id="competencia" class="form-control" name="competencia" required="required">
+                    <option value="Janeiro" selected=''>Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Março">Março</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                </select>
+                <br>
+                <label>Ano da Competência:</label>
+                <div>
+                <input id="anoCompetencia" type="radio" name="anoCompetencia" value="1"> Ano corrente<br>
+                <input id="anoCompetencia" type="radio" name="anoCompetencia" value=""> Ano calendário<br><br>
+                </div>
+                <label>Órgão Requisitante:</label>
+                <select id="orgaoRequisitante" class="form-control" name="orgaoRequisitante" required="required"
+                    value="">
+                    <option value="D2DP">D2DP</option>
+                    <option value="D2GC">D2GC</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nome:</label>
+                <input id="nome" class="form-control" type="text" name="nome" required="required" value="" />
+                <label>Matrícula:</label>
+                <input id="matricula" class="form-control" type="text" min="6" max="6" name="matricula"
+                    required="required" value="" />
+            </div>
+            <hr>
+            <h3>Formulário Detalhado:
+                <img src="./imagem/info-icon.png" alt="Não foi possível carregar a imagem!" />
+            </h3>
+            <hr>
+            <div class="form-group">
+                <label>Data Requisição:</label>
+                <input id="data" class="form-control" type="date" name="data" required="required" value="">
+                <label>Hora de Início:</label>
+                <input id="inicio" class="form-control" type="time" name="inicio" required="required" value="">
+                <label>Hora de Término:</label>
+                <input id="termino" class="form-control" type="time" name="termino" required="required" value="">
+                <label>Total de Minutos:</label>
+                <input id="minutos" class="form-control" type="number" name="minutos" required="required" value="">
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <div>
+                        <label>Demanda:</label>
+                        <textarea id="demanda" class="form-control" name="demanda" value=""
+                            onkeyup="InputHelper.contarCaracteres(this.value, 245, 'spanDemanda')"></textarea>
+                        <span id="spanDemanda"></span>
+                    </div>
+                    <div>
+                        <label>Justificativa:</label>
+                        <textarea id="justificativa" class="form-control" name="justificativa" value=""
+                            onkeyup="InputHelper.contarCaracteres(this.value, 350, 'spanJustificativa')"></textarea>
+                        <span id="spanJustificativa"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Especificação:</label>
+                        <textarea id="especificacao" class="form-control" name="especificacao" value=""
+                            onkeyup="InputHelper.contarCaracteres(this.value, 245, 'spanEspecificacao')"></textarea>
+                        <span id="spanEspecificacao"></span>
+                    </div>
+                    <div>
+                        <label>Serviço Prestado:</label>
+                        <textarea id="servicoPrestado" class="form-control" name="servicoPrestado" value=""
+                            onkeyup="InputHelper.contarCaracteres(this.value, 245, 'spanServicoPrestado')"></textarea>
+                        <span id="spanServicoPrestado"></span>
+                    </div>
+                </div>
+            </div>
+            <button id="btnAdicionar" class="btn btn-primary text-center" type="submit">Adicionar</button>
+            <hr>
+            <div id="reportView"></div>
+            <div>
+                <label>Informações sobre Compensação:</label>
+                <textarea id="informacoesCompensacao" class="form-control" name="informacoesCompensacao"
+                    value="" onkeyup="InputHelper.contarCaracteres(this.value, 245, 'spanInfoCompensacao')"></textarea>
+                    <span id="spanInfoCompensacao"></span>
+            </div>
+            <br>
+            <button id=" btnGerarPdf" class="btn btn-primary text-center" type="button"
+                onclick="reportController.generatorDocument()">Gerar PDF</button>
+        </form>
+    </div>
+    <script src="js/app/controller/ReportController.js"></script>
+    <script src="js/app/models/Report.js"></script>
+    <script src="js/app/models/ListReport.js"></script>
+    <script src="js/app/helper/DateHelper.js"></script>
+    <script src="js/app/helper/InputHelper.js"></script>
+    <script src="js/app/helper/ImageHelper.js"></script>
+    <script src="js/app/view/ReportView.js"></script>
+    <script src="js/app/pdfGenerator/GeneratorReport.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script>
+        let reportController = new ReportController();
+    </script>
+</body>
+
+</html>
